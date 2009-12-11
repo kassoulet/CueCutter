@@ -3,9 +3,10 @@
 """
 CueCutter
 
-mp3splt Gtk Front-End
+Simple Gtk Front-End for mp3splt.
 
 mp3splt splits cue + audiofile to multiple audio files, without recompressing.
+It's fast and doesn't affect quality. It handles Ogg Vorbis and MP3 audio files.
 
 (c) 2009 Gautier Portet <kassoulet gmail com>
 """
@@ -112,7 +113,7 @@ class Window:
             cue = url.path
 
             self.process_cue(cue)
-            
+
     @idle
     def process_cue(self, cue):
         media = extract_filename_from_cue(cue)
