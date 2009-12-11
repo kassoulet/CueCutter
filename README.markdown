@@ -2,7 +2,7 @@ CueCutter
 
 Simple Gtk Front-End for mp3splt.
 
-![Screenshot](cuecutter-screenshot.png)
+![Screenshot](http://imgur.com/oTFgi.png)
 
 
 mp3splt splits cue + audiofile to multiple audio files, without recompressing.
