@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=CueCutter
+GenericName=Split Cue+Audio in Multiple Audio Files
+Comment=
+Icon=
+MimeType=application/x-cue
+Exec=cuecutter %f
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;AudioVideo;
+GenericName[en_US]=
