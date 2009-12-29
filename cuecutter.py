@@ -13,6 +13,7 @@ It's fast and doesn't affect quality. It handles Ogg Vorbis and MP3 audio files.
 
 
 import os
+from sys import argv
 from urllib import url2pathname
 from urlparse import urlparse
 
@@ -49,7 +50,7 @@ check_mp3splt()
 # -m m3u_file
 
 def split(**kwargs):
-    args = '-Q -c "%(cue)s" -d "%(folder)s" -o @n-@p-@t "%(mp3)s"'
+    args = '-Q -c "%(cue)s" -d "%(folder)s" -o @n-@p-@t "%(mp3)s" -m "%(m3u)s"'
     args = args % kwargs
 
     retcode = os.system('mp3splt '+ args)
@@ -116,6 +117,7 @@ class Window:
 
     @idle
     def process_cue(self, cue):
+        print 'cutting:', cue
         media = extract_filename_from_cue(cue)
         if not media:
             print 'error parsing:', cue
@@ -128,7 +130,8 @@ class Window:
     @idle
     def cut(self, cue, media):
         folder = os.path.splitext(cue)[0]
-        success = split(cue=cue, mp3=media, folder=folder)
+        m3u = folder + '.m3u'
+        success = split(cue=cue, mp3=media, folder=folder, m3u=m3u)
         if success:
             self.label.set_text('Done.')
         else:
@@ -143,5 +146,9 @@ from base64 import decodestring
 file('/tmp/cuecutter.svg', 'w').write(decompress(decodestring(bitmap_data)))
 
 window = Window()
+
+for filename in argv[1:]:
+    window.process_cue(filename)
+
 gtk.main()
 
