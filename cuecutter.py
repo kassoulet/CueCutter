@@ -50,10 +50,10 @@ check_mp3splt()
 # -m m3u_file
 
 def split(**kwargs):
-    args = '-Q -c "%(cue)s" -d "%(folder)s" -o @n-@p-@t "%(mp3)s" -m "%(m3u)s"'
+    args = '-q -c "%(cue)s" -d "%(folder)s" -o @n-@p-@t "%(mp3)s" -m "%(m3u)s"'
     args = args % kwargs
 
-    retcode = os.system('mp3splt '+ args)
+    retcode = os.system('mp3splt %s >/dev/null 2> /tmp/mp3splt.error' % args)
     return retcode == 0
 
 
@@ -124,6 +124,7 @@ class Window:
             self.label.set_text('Error reading cue file!')
             return
         media = os.path.join(os.path.dirname(cue), media)
+        self.label.set_tooltip_text(None)
         self.label.set_text('Cutting %s' % os.path.basename(media))
         self.cut(cue, media)
 
@@ -134,8 +135,14 @@ class Window:
         success = split(cue=cue, mp3=media, folder=folder, m3u=m3u)
         if success:
             self.label.set_text('Done.')
+            self.label.set_tooltip_text(None)
         else:
             self.label.set_text('Error!')
+            try:
+                error = file('/tmp/mp3splt.error').read()
+                self.label.set_tooltip_text(error)
+            except IOError:
+                self.label.set_tooltip_text(None)
 
 
 bitmap_data = '''@BITMAP@'''
