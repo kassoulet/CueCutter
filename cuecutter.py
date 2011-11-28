@@ -50,10 +50,9 @@ check_mp3splt()
 # -m m3u_file
 
 def split(**kwargs):
-    args = '-q -c "%(cue)s" -d "%(folder)s" -o @n-@p-@t "%(mp3)s" -m "%(m3u)s"'
+    args = '-D -c "%(cue)s" -d "%(folder)s" -o @n-@p-@t "%(mp3)s" -m "%(m3u)s"'
     args = args % kwargs
-
-    retcode = os.system('mp3splt %s >/dev/null 2> /tmp/mp3splt.error' % args)
+    retcode = os.system('mp3splt %s >/tmp/mp3splt.out 2> /tmp/mp3splt.error' % args)
     return retcode == 0
 
 
